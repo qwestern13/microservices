@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { AuthUserDto } from './dto/auth-user.dto';
@@ -29,11 +29,22 @@ export class AuthController {
     async create(@Body() dto: AuthUserDto) {
         //Отправляем поля firstname, secondname, phone в profile
         await this.client.emit('create', dto);
-        return this.authService.createUser(dto);
+        this.authService.createUser(dto);
+        return {
+            message: 'SUCCESS'
+        };
     }
     
     @Get()
+    //Показать всех пользователей
     getAll() {
         return this.authService.getAllUsers();
+    }
+
+
+    @Get('/:id')
+    //Показать одного пользователя по id
+    getOne(@Param('id') id: number) {
+        return this.authService.getUser(id);
     }
 }

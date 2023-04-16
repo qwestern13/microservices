@@ -19,7 +19,7 @@ export class AuthService {
         return login;
     }
 
-    private async generateToken(user: User) {
+    async generateToken(user: User) {
         console.log(user);
         const payload = {id: user.id, email: user.email};
         return {
@@ -27,7 +27,7 @@ export class AuthService {
         }
     }
 
-    private async validateUser(dto: AuthUserDto) {
+    async validateUser(dto: AuthUserDto) {
         const email = dto.email;
         const user = await this.userRepository.findOne({where: {email}, include: {all: true}});
         const passwordEquals = await bcrypt.compare(dto.password, user.password);
@@ -46,5 +46,9 @@ export class AuthService {
 
     async getAllUsers() {
         return this.userRepository.findAll({include: {all: true}});
+    }
+
+    async getUser(id: number) {
+        return await this.userRepository.findOne({where: {id}})
     }
 }

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 
@@ -21,4 +21,15 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+  it('/POST', () => {
+    return request(app.getHttpServer())
+      .post('/auth/login')
+      .set('Accept', 'application/json')
+      .send({email: 'admin10', password: '123456'})
+      .expect((response: request.Response) => {
+        const { token }: {token: string} = response.body;
+        expect(token).toBeUndefined();
+      })
+      .expect(HttpStatus.FORBIDDEN)
+  })
 });
