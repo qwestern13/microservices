@@ -19,6 +19,19 @@ services:
     - postgres  
     restart: always
 
+  listener:
+    build: .
+    image: app
+    command: npm run listen
+    volumes:
+      - .:/app
+      - /app
+    ports:
+    - 5678:5672
+    depends_on:
+      - postgres 
+    restart: always
+
   postgres:
     container_name: postgres
     image: postgres:12

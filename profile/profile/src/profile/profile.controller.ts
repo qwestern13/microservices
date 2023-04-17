@@ -2,7 +2,6 @@ import { HttpService } from '@nestjs/axios';
 import { Body, Controller, Get, Inject, Param, Post} from '@nestjs/common';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { CreateProfileDto } from './dto/create-profile.dto';
-import { Profile } from './profile.model';
 import { ProfileService } from './profile.service';
 
 @Controller('profile')
@@ -17,7 +16,6 @@ export class ProfileController {
     
     @EventPattern('create')
     async createProfile(data) {
-       // const firstname = data.firstname;
         console.log(data);
         return await this.profileService.createProfile(data);
         

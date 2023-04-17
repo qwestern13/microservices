@@ -40,6 +40,11 @@ export class AuthService {
 
     async createUser(dto: AuthUserDto) {
         const hashPassword = await bcrypt.hash(dto.password, 5);
+        const email = dto.email
+        const candidate = await this.userRepository.findOne({where: {email}});
+        if (candidate) {
+            throw new HttpException(`Пользователь с email = ${email} существует`, HttpStatus.BAD_REQUEST);
+        } 
         const user = await this.userRepository.create({email: dto.email, password: hashPassword});
         return user;
     }

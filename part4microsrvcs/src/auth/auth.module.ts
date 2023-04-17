@@ -4,7 +4,6 @@ import { AuthController } from './auth.controller';
 import { User } from './user.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { JwtModule } from '@nestjs/jwt';
-import { AppModule } from 'src/app.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({

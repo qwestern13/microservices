@@ -17,10 +17,10 @@ import { AuthService } from './auth/auth.service';
   }),
   SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',//process.env.POSTGRES_HOST,
+      host: process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
-      password: 'qwestern13!',//process.env.POSTGRES_PASSWORD,
+      password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [User],
       autoLoadModels: true

@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateProfileDto } from './dto/create-profile.dto';
 import { Profile } from './profile.model';
 
 @Injectable()
@@ -13,7 +12,6 @@ export class ProfileService {
     }
 
     async createProfile(data) {
-        //const phone = dto.phone;
         const email = data.email
         const candidate = await this.profileRepository.findOne({where: {email}});
         if (candidate) {
